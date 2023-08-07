@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>快乐星球</title>
+  <link rel="icon" href="/img/logEather.ico" type="image/x-icon"/>
+  <link rel="stylesheet" type="text/css" href="/css/index.css">
+</head>
+<body>
+<div class="container">
+  <h2>Login</h2>
+  <form id="login-form" autocomplete="off">
+  <div class="input-group">
+    <label for="use_name">用户名：</label>
+    <input type="text" id="use_name" placeholder="Enter your username"required minlength="1"
+           maxlength="10" size="25">
+  </div>
+  <div class="input-group">
+    <label for="use_password">密码：</label>
+    <input type="password" id="use_password" placeholder="Enter your password"required minlength="3" maxlength="15" size="10">
+  </div>
+<!--  <div class="input-group">-->
+<!--    <label for="captcha">Captcha:</label>-->
+<!--    <img src="captcha.jpg" id="captchaImage" alt="Captcha">-->
+<!--    <input type="text" id="captcha" placeholder="Enter the captcha">-->
+
+<!--  </div>-->
+<!--  <div class="input-group">-->
+<!--    <label for="phone">Phone Number:</label>-->
+<!--    <input type="text" id="phone" placeholder="Enter your phone number">-->
+<!--    <button id="sendCodeBtn">Send Code</button>-->
+<!--  </div>-->
+<!--  <div class="input-group">-->
+<!--    <label for="code">Verification Code:</label>-->
+<!--    <input type="text" id="code" placeholder="Enter the verification code">-->
+<!--  </div>-->
+<div>
+  <button type="submit" id="loginBtn">登录</button>
+  <button type="submit" id="registrationButton" onclick="registrationButton()">注册</button>
+  <button type="submit">其他方式</button>
+</div>
+  </form>
+</div>
+
+</body>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js_script/index.min.js"></script>
+<script src="/js_script/TokenStorage.js"></script>
+</html>

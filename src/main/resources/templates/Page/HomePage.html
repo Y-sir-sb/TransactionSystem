@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>快乐星球</title>
+  <link rel="icon" href="/img/logEather.ico" type="image/x-icon"/>
+  <link type="text/css" rel="stylesheet" href="/css/HomePage.css" >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="container">
+  <div class="form-container collapsed">
+    <nav>
+      <ul>
+
+        <li><a href="#"><i class="fas fa-sign-out-alt">退出登录</i></a></li>
+        <li><a href="#"><i class="fas fa-info-circle"></i> 关于我们</a></li>
+        <li><a href="#"><i class="fas fa-box"></i> 产品</a></li>
+        <li><a href="#"><i class="fas fa-handshake"></i> 服务</a></li>
+        <li><a href="#"><i class="fas fa-phone"></i> 联系我们</a></li>
+
+      </ul>
+    </nav>
+  </div>
+
+
+  <div contenteditable="center">
+    <h3>3D地球定位系统</h3>
+  </div>
+  <div class="right-div">
+    <!--    在当前页面显示当前用户-->
+    <div class="online-users">
+
+      <div class="parent-container">
+        <div id="current-user-info"></div>
+      </div>
+
+      <div class="online-count">
+        <p>在线人数</p>
+        <p id="online-count"></p>
+      </div>
+
+      <div class="user-card">
+        <div class="card-content">
+          <p>个人信息</p>
+          <button id="logout-btn">退出登录</button>
+          <!-- 在这里添加显示个人信息的内容 -->
+        </div>
+      </div>
+
+    </div>
+    <div class="location">
+      <h4>当前经纬度</h4>
+      <p id="location">获取中...</p>
+    </div>
+    <div class="ip">
+      <h4>IP地址</h4>
+      <p id="ip-address">获取中...</p>
+    </div>
+  </div>
+  <div class="game">
+    <h2>游戏界面</h2>
+    <!-- 游戏界面的代码和样式 -->
+  </div>
+  <div class="music">
+    <h2>听歌界面</h2>
+    <p>在这里放置听歌界面的代码和样式</p>
+  </div>
+  <div class="shopping">
+    <h2>购物</h2>
+    <!-- 购物界面的代码和样式 -->
+  </div>
+  <div class="blog">
+    <h2>博客</h2>
+    <div class="blog-post">
+      <h3>博客标题 1</h3>
+      <div class="user-info">
+        <img src="avatar1.jpg" alt="用户头像" class="user-avatar">
+        <p>用户名</p>
+      </div>
+      <p>博客内容...</p>
+      <div class="comment">
+        <h4>评论：</h4>
+        <div class="user-info">
+          <img src="avatar2.jpg" alt="用户头像" class="user-avatar">
+          <p>评论用户1</p>
+        </div>
+        <p>评论内容...</p>
+      </div>
+    </div>
+    <div class="blog-post">
+      <h3>博客标题 2</h3>
+      <div class="user-info">
+        <img src="avatar3.jpg" alt="用户头像" class="user-avatar">
+        <p>用户名</p>
+      </div>
+      <p>博客内容...</p>
+    </div>
+  </div>
+  <div class="shopping">
+  </div>
+  <div id="exit_Login">
+    <button type="submit" id="exitLogin"onclick="registrationButton()">退出登录</button>
+  </div>
+</div>
+
+
+</body>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js_script/TokenStorage.js"></script>
+<script src="/js_script/HomePage.min.js"></script>
+<script src="/js_script/showUtil.js"></script>
+</html>

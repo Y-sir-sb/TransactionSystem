@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/img/logEather.ico" type="image/x-icon"/>
+  <link rel="stylesheet" href="/css/regeditPage.css">
+  <title>快乐星球</title>
+</head>
+<body>
+<img class="regedit_left" src="/img/regedit_left.jpg" alt="左侧图片指引">
+<form id="regedit" class="regedit-form"autocomplete="off">
+  <h3>注册信息</h3>
+  账号:<input id="name" type="text" name="use_name" required minlength="1"
+              maxlength="10" size="25" placeholder="请输入电话、邮箱或姓名"/><br/>
+  密码:<input id="password" type="password" name="use_password" required minlength="3" maxlength="15" size="10"/><br/>
+  真实姓名:<input id="use_ActualName" type="text" name="use_ActualName" required minlength="3" maxlength="8" size="10"/><br/>
+  年龄:<input id="use_age" type="text" name="use_age" required minlength="0" maxlength="8" size="10"/><br/>
+  地址:<input id="use_address" type="text" name="use_address" required minlength="0" maxlength="16" size="20"/><br/>
+  邮箱:<input id="use_email" type="email" name="use_email" required minlength="10" maxlength="20" size="10"/><br/>
+  <!--<input id="use_uid" type="text" name="use_uid"required minlength="4" maxlength="8" size="10">用户级别</br>-->
+  身份证号：<input id="use_ipcard" type="text" name="use_ipcard" required minlength="18" maxlength="18" size="20"/><br/>
+  性别:
+  &ensp;&ensp;男<input id="mainSex" type="radio" name="use_sex" required  value="男"/>
+  &ensp;&ensp;女<input id="grilSex" type="radio" name="use_sex" required  value="女"/><br/><br/>
+  注册时间:<input id="use_time" type="date" name="use_time" required minlength="4" maxlength="8"/><br/>
+  <br/>
+  <label>
+    <button type="submit" class="regedit-submit" value="注册">注册</button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="reset" value="重置">重置</button>
+  </label>
+</form>
+
+</body>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js_script/regeditPage.min.js"></script>
+</html>

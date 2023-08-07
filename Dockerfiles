@@ -1,0 +1,130 @@
+FROM ubuntu
+#容器安装python mariadb
+RUN apt update;apt install -y python3.11 mariadb-server unzip python3-pip nginx
+RUN apt-get update && apt-get install -y \
+    default-libmysqlclient-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+#容器作者信息
+MAINTAINER zhangwei 320861712@qq.com
+#设置工作目录
+WORKDIR /thebook
+COPY  ./thebook.zip /thebook
+RUN cd /thebook;unzip thebook.zip
+RUN mkdir /thebook/logs;touch /thebook/logs/error.log
+#设置环境变量，便于管理
+ENV MARIADB_USER root
+ENV MARIADB_PASS Zw2000zw
+ENV WORKDIR_PATH '/thebook'
+#让容器支持中文
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+#初始化数据库.项目
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r /thebook/requirements.txt
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple tzdata uwsgi
+RUN rm -rf /etc/nginx/nginx.conf
+RUN useradd nginx -G www-data
+
+
+# 数据库初始化脚本
+RUN echo "#!/bin/bash \n\
+sleep 3 \n\
+/etc/init.d/mariadb start \n\
+mysql -e \"use mysql;ALTER USER '$MARIADB_USER'@'localhost' IDENTIFIED BY '$MARIADB_PASS';FLUSH PRIVILEGES;\" \n\
+mysql -u\"$MARIADB_USER\" -p\"$MARIADB_PASS\" -e \"create database thebook charset utf8mb4;use thebook;source /thebook/thebook.sql;\"\n\
+mysql -u\"$MARIADB_USER\" -p\"$MARIADB_PASS\" -e \"flush privileges;\"" >/root/db_init.sh
+
+# uwsgi 配置脚本
+RUN echo "[uwsgi]\n\
+# 开启主进程\n\
+master = true\n\
+# 指定uwsgi工作的进程数\n\
+processes = 1\n\
+# 指定工作的每个进程下的线程数\n\
+threads = 2\n\
+# 指定项目的目录\n\
+chdir = /thebook\n\
+# wsgi.py文件的位置\n\
+wsgi-file= %(chdir)/thebook/wsgi.py\n\
+# 使用nginx这里就要用socket\n\
+socket = 127.0.0.1:8000\n\
+# 日志  需要去创建这个文件\n\
+logto = %(chdir)/logs/error.log\n\
+chmod-socket = 660\n\
+vacuum = true\n\
+max-requests = 1000\n\
+# uwsgi的运行状态\n\
+stats=%(chdir)/uwsgi.status\n\
+# uwsgi的进程id\n\
+pidfile=%(chdir)/uwsgi.pid" >/root/uwsgi.ini
+
+
+
+# nginx 配置脚本
+RUN echo "user nginx; \n\
+worker_processes auto; \n\
+error_log /var/log/nginx/error.log;\n\
+pid /run/nginx.pid;\n\
+\n\
+include /usr/share/nginx/modules/*.conf;\n\
+events {\n\
+    worker_connections 1024;\n\
+}\n\
+http {\n\
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" ' \n\
+                      '$status $body_bytes_sent "$http_referer" ' \n\
+                      '"$http_user_agent" "$http_x_forwarded_for"'; \n\
+\n\
+    access_log  /var/log/nginx/access.log  main; \n\
+\n\
+    sendfile            on;\n\
+    tcp_nopush          on;\n\
+    tcp_nodelay         on;\n\
+    keepalive_timeout   65;\n\
+    types_hash_max_size 4096;\n\
+\n\
+    include             /etc/nginx/mime.types;\n\
+    default_type        application/octet-stream;\n\
+    server_tokens       off; \n\
+    include /etc/nginx/conf.d/*.conf;\n\
+\n\
+    server {\n\
+        listen       80;\n\
+        listen       [::]:80;\n\
+        server_name  _;\n\
+        location / {\n\
+                uwsgi_pass 127.0.0.1:8000;\n\
+                include uwsgi_params;\n\
+        }\n\
+        location /static{\n\
+                alias /thebook/static;\n\
+        }\n\
+\n\
+        location /img_hp{\n\
+                alias /thebook/img_hp;\n\
+        }\n\
+        location /img_sp{\n\
+                alias /thebook/img_sp;\n\
+        }\n\
+    }\n\
+}" >/etc/nginx/nginx.conf
+
+RUN chmod 775 /root/db_init.sh
+RUN /root/db_init.sh
+
+#导出端口
+EXPOSE 80
+
+
+#设置容器启动服务脚本
+RUN echo "#!/bin/bash \n\
+/etc/init.d/mariadb start \n\
+sleep 3\n\
+uwsgi --ini /root/uwsgi.ini &\n\
+sleep 3\n\
+/etc/init.d/nginx start\n\
+nginx -s reload\n\
+tail -f /thebook/logs/error.log" >/usr/bin/run.sh
+RUN chmod 775 /usr/bin/run.sh
+#设置默认启动命令
+ENTRYPOINT ["run.sh"]

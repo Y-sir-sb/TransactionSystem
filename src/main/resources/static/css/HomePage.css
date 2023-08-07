@@ -1,0 +1,221 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    text-align: center;
+    color: #333;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.fa-thin{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.fas {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.form-container {
+    grid-column: span 1;
+}
+.form-container nav ul li a {
+    text-decoration: none;
+    color: #3dd5f3; /* 更改为你想要的字体颜色 */
+}
+.form-container nav ul li a i {
+    color: #000000; /* 更改为你想要的图标颜色 */
+    font-size: 30px;
+    /* 其他样式设置，例如字体大小、边距等 */
+}
+.collapsed ul li a {
+    padding: 0;
+}
+
+.collapsed ul li a i {
+    margin-right: 5px;
+}
+
+.collapsed ul li a span {
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 32%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.right-div{
+    margin-left:20px;
+}
+.online-users {
+    position: relative;
+    grid-column: span 2;
+    text-align: right;
+}
+
+.online-users h2 {
+    margin-top: 0;
+    margin-left:50px;
+    color: #333;
+}
+
+.online-users p {
+    color: #666;
+    font-family: 华文楷体;
+    font-size: 18px;
+    font-weight: bold;
+}
+.online-count {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.online-count p {
+    margin-right: 10px;
+}
+.game {
+    grid-column: span 2;
+    text-align: center;
+}
+
+.game h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.music {
+    grid-column: span 1;
+    text-align: center;
+}
+
+.music h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.music p {
+    color: #666;
+}
+
+.blog {
+    grid-column: span 3;
+}
+
+.blog h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.blog-post {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.blog-post h3 {
+    color: #333;
+}
+
+.blog-post p {
+    color: #666;
+}
+
+.comment {
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.comment h4 {
+    margin-top: 0;
+    color: #333;
+}
+
+.comment p {
+    color: #666;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.shopping {
+    grid-column: span 1;
+    text-align: center;
+}
+
+.shopping h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.location {
+    grid-column: span 1;
+    text-align: right;
+}
+
+.location h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.ip {
+    grid-column: span 1;
+    text-align: right;
+}
+
+.ip h2 {
+    margin-top: 0;
+    color: #333;
+}

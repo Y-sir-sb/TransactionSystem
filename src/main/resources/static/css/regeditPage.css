@@ -1,0 +1,81 @@
+body {
+    /*background: linear-gradient( to center,#f7b267, #f79d65);*/
+    background-color: #565e64;
+    display: flex;
+    ustify-content: flex-end;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+}
+.regedit_left{
+    width:30%;
+    height: 19%;
+    margin-left:20%;
+}
+
+.regedit-form {
+    width: 400px;
+    background-color: #565e64;
+    padding: 15px;
+    border-radius: 5px;
+    color: #ffffff;
+    border:#2b3035 solid 1px;
+    margin-top: 5%;
+    margin-left:10%;
+    backdrop-filter: blur(4px);
+}
+h3 {
+    text-align: center;
+    color: #333;
+}
+.regedit-form input[type="text"],
+.regedit-form input[type="password"],
+.regedit-form input[type="file"],
+.regedit-form input[type="email"],
+.regedit-form input[type="date"]{
+    display:inline-flex;
+    margin-bottom: 5px;
+    width: 70%;
+    background-color:#565e64;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #ffffff;
+}
+.regedit-form input[type="radio"]{
+    display:inline-flex;
+}
+.regedit-form label {
+    display: block;
+    margin-top:5px;
+    text-align: center;
+}
+
+.regedit-submit,
+.regedit-form button[type="reset"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #4e73df;
+    cursor: pointer;
+}
+
+.regedit-submit:hover,
+.regedit-form button[type="reset"]:hover {
+    background-color:#0a58ca;
+}
+
+.regedit-form p {
+    margin-top: 10px;
+}
+
+/*.regedit-form p input[type="radio"] {*/
+/*    margin-right: 5px;*/
+/*}*/
+
+.regedit-form p label {
+    margin-right: 10px;
+}
+
