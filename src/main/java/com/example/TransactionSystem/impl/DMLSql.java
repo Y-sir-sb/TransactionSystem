@@ -2,7 +2,7 @@ package com.example.TransactionSystem.impl;
 
 import com.example.TransactionSystem.empty.User;
 import com.example.TransactionSystem.interenface.DML;
-import com.example.TransactionSystem.utils.Con;
+import com.example.TransactionSystem.utils.Conn;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 @Component
 public class DMLSql implements DML {
-    Con conn = new Con();
+    Conn conn = new Conn();
     PreparedStatement statement;
     ResultSet resultSet;
     Statement stat;
