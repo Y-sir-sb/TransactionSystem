@@ -13,7 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 public class FileloadUtil{
-   static boolean uploadFile(String filePath, String uploadUrl) {
+   public boolean uploadFile(String filePath, String uploadUrl) {
         File file = new File(filePath);
         if (!file.exists()) {
             System.out.println("FilePath is null: " + filePath);
@@ -48,7 +48,7 @@ public class FileloadUtil{
 
         return false;  // Return false to indicate failure
     }
-    static boolean DownloadUtil(String Filename,String DownloadUrl){
+    public boolean DownloadUtil(String Filename,String DownloadUrl){
 
             try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
                 HttpGet httpGet = new HttpGet(DownloadUrl);

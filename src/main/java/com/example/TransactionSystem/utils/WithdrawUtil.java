@@ -1,6 +1,7 @@
 package com.example.TransactionSystem.utils;
 
 public class WithdrawUtil {
+    //切割字符串
     public String extractSubValue(String preysToken) {
         int subStartIndex = preysToken.indexOf("sub=");  // 查找 sub= 的起始位置
         if (subStartIndex != -1) {
