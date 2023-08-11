@@ -4,14 +4,26 @@ import com.example.TransactionSystem.impl.DMLSql;
 import com.example.TransactionSystem.impl.TokenBean;
 import com.example.TransactionSystem.interenface.DML;
 import com.example.TransactionSystem.interenface.isTokens;
+import com.example.TransactionSystem.utils.FileloadUtil;
 import com.example.TransactionSystem.utils.WithdrawUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.spi.ToolProvider;
@@ -19,7 +31,10 @@ import java.util.spi.ToolProvider;
 @RestController
 @RequestMapping("/api")
 public class ApiController {
-
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadDirectory;
+    @Autowired
+    private FileloadUtil fileUploadUtil;
     DML dml = new DMLSql();
     isTokens tokenBean = new TokenBean();
     @RequestMapping(value = "/Page/regedit", method = RequestMethod.POST)
@@ -107,7 +122,45 @@ public class ApiController {
             return new ResponseEntity<>(new Message("token_not_found"), HttpStatus.UNAUTHORIZED);
         }
     }
+    private static final String UPFILE_URL = "path_to_upload_directory";
+    @PostMapping("")
+    public ResponseEntity<String> uploadAvatar(@RequestParam("fileName") MultipartFile file) throws JSONException {
+        try {
+            if (fileUploadUtil.uploadFile(file, uploadDirectory)) {
+                // Construct JSON response for successful upload
+                JSONObject jsonResponse = new JSONObject();
+                jsonResponse.put("status", "SUCCESS");
+                jsonResponse.put("avatarUrl", UPFILE_URL + "/" + file.getOriginalFilename());
 
+                return ResponseEntity.ok(jsonResponse.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Construct JSON response for failed upload
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("status", "FAILURE");
+
+        return ResponseEntity.badRequest().body(jsonResponse.toString());
+    }
+    @GetMapping("")
+    public ResponseEntity<byte[]> downloadFile(@RequestParam("fileName") String fileName) throws IOException {
+        try {
+            Path filePath = Paths.get(uploadDirectory + "/" + fileName);
+            byte[] fileContent = Files.readAllBytes(filePath);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", fileName);
+
+            return ResponseEntity.ok().headers(headers).body(fileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.badRequest().body(null);
+    }
 
 }
 
