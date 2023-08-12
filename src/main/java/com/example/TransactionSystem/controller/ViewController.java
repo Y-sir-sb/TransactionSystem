@@ -11,6 +11,10 @@ public class ViewController {
         return "index";
         //index.html
     }
+    @GetMapping(value = "Page/Longing/PreLoading")
+    public String Preloading(){
+        return "Page/Loging/PreLoading";
+    }
     @GetMapping(value = "Page/HomePage")
     public String Home(){
         return "Page/HomePage";

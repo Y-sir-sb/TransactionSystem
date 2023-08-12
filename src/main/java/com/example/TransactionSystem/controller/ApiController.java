@@ -26,17 +26,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 import java.util.spi.ToolProvider;
+import com.example.TransactionSystem.impl.LoggerSer;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/api")
 public class ApiController {
     @Value("${spring.servlet.multipart.location}")
     private String uploadDirectory;
-    @Autowired
     private FileloadUtil fileUploadUtil;
     DML dml = new DMLSql();
     isTokens tokenBean = new TokenBean();
+    LoggerSer loggerSer = new LoggerSer();
     @RequestMapping(value = "/Page/regedit", method = RequestMethod.POST)
     public ResponseEntity<Object> regedit(@RequestBody User user) {
         if (user != null) {
@@ -60,9 +63,9 @@ public class ApiController {
         }
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ResponseEntity<Object> login(@RequestBody User user)
-            throws SQLException,NoSuchAlgorithmException {
+            throws SQLException{
         String username = user.getUse_name();
         String password = user.getUse_password();
 
@@ -70,25 +73,16 @@ public class ApiController {
             // 请求体为空
             return new ResponseEntity<>(new Message("invalid_credentials"), HttpStatus.UNAUTHORIZED);
         }
-
         boolean userExists = dml.checkUserCredentials(username, password);
+
         if (userExists) {
+            loggerSer.log(username);
             // 更新用户状态
             boolean statusUpdate = dml.UserStatusUpdater(username, 1);
             if (statusUpdate) {
                 // 生成令牌
                 String  token  = tokenBean.generateToken(user.getUse_name());
                 if (token != null) {
-//                        //发送token到cookie到响应头
-//                        Cookie tokenCookie = new Cookie("token", token);
-//                        tokenCookie.setHttpOnly(false);
-//                        tokenCookie.setSecure(false); // 仅在使用 HTTPS 时发送
-//                        // 设置 SameSite 属性
-//                        String sameSiteValue = "Lax"; // 或"Strict"
-//                        response.setHeader("Set-Cookie", String.format("%s; SameSite=%s", tokenCookie.toString(), sameSiteValue));
-//                        // 添加 Cookie 到响应头
-//                        response.addCookie(tokenCookie);
-//                        // 返回登录成功的响应，包含令牌
                         return new ResponseEntity<>(new TokenMessage(true,"；令牌成功生成",token), HttpStatus.OK);
                     }
                 } else {
